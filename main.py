@@ -1,9 +1,20 @@
 import sys
+from pathlib import Path
 
 def exibir_ajuda():
     """Exibe as instruções de uso do script."""
     print("Uso: python main.py <URL_DO_YOUTUBE> \"<CAMINHO_DA_PASTA>\"")
     print("Exemplo: python main.py \"https://youtu.be/some_video\" \"Minhas Musicas/Rock\"")
+
+def preparar_pasta_destino(caminho_da_pasta_string: str) -> Path:
+    """
+    Converte a string do caminho para um objeto Path e garante que a pasta exista.
+    """
+    pasta_destino = Path(caminho_da_pasta_string)
+    pasta_destino.mkdir(parents=True, exist_ok=True)
+
+    print(f"Pasta de destino '{pasta_destino}' pronta.")
+    return pasta_destino
 
 def main():
     """Função principal que orquestra o script."""
@@ -19,6 +30,8 @@ def main():
     caminho_da_pasta = argumentos[2]
     
     print(f"URL recebida: {url_do_video}")
+    preparar_pasta_destino(caminho_da_pasta_string)
+    
     print(f"Pasta de destino: {caminho_da_pasta}")
 
 
